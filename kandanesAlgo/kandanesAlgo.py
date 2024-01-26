@@ -7,7 +7,7 @@ def kandane(array):
         if currSub > currSub + maxSubVal:
             maxSubVal = currSub
         else:
-            maxSubVal = currSub+ maxSubVal
+            maxSubVal = currSub + maxSubVal
         if maxSubArrayGlobal < maxSubVal:
             maxSubArrayGlobal = maxSubVal
 

@@ -15,8 +15,6 @@ class Solution(object):
         elif len(nums) == 0:
              return None
         else:
-            l = nums[:len(nums)//2]
-            r = nums[len(nums)//2+1:]
             middleVal = nums[len(nums)//2]
             rightSide = self.sortedArrayToBST(nums[:len(nums)//2])
             leftSide = self.sortedArrayToBST(nums[len(nums)//2+1:])
