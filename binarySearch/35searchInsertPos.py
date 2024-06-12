@@ -6,7 +6,7 @@ def binarySearch(nums, target, start):
     middle = len(nums) // 2
     find = nums[middle]
 
-    if find == target: # here we have found the element
+    if find == target:
         return start + middle
     elif target > find:
         return binarySearch(nums[middle + 1:], target, start + middle + 1)
