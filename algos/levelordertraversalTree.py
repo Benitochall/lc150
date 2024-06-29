@@ -1,4 +1,5 @@
 # Definition for a binary tree node.
+# this uses bfs
 class TreeNode(object):
     def __init__(self, val=0, left=None, right=None):
         self.val = val
