@@ -21,5 +21,5 @@ def maxSubarraySumCircular(array):
     maxSubArray = kanadanesAlgo(array)
     minSubArray = kanadanesAlgo([-1*x for x in array])
 
-    return maxSubArray maxSubArray - minSubArray
+    return maxSubArray
         
