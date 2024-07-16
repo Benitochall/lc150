@@ -4,9 +4,6 @@ class TreeNode(object):
         self.left = left
         self.right = right
 class Soultion(object):
-    def find(self):
-
-        pass
 
     def union(self, graph, parent, child, isLeft):
 
