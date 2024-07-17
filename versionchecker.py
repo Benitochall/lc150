@@ -32,4 +32,4 @@ def version_compare(version1, version2):
             
     return 0
 
-print(version_comparer("2.10.0.1", "2.1.0.10"))
+print(version_compare("2.10.0.1", "2.1.0.10"))
