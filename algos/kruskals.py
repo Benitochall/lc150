@@ -1,70 +1,77 @@
+import heapq
 class Graph():
-    def __init__(self,n) -> None:
-        self.vertices = n
-        self.graph = []
-        self.parents = list(range(n))
-        self.size = [1] * n
-        pass
+    def find(self, n, parents):
+        if n != parents[n]:
+            n = self.find(parents[n], parents)
 
-    def addEdge(self, u, v, w): 
-        self.graph.append([u, v, w])
+        return n
 
-    def find(self, n):
-        # this will return the parent node 
-        if n != self.parents[n]:
-            self.parents[n] = self.find(self.parents[n])
+    def union(self, node1, node2, parents, sizes):
 
-        return self.parents[n]
+        parent1 = self.find(node1,parents)
+        parent2 = self.find(node2,parents)
 
-    def union(self, node1,node2):
-        root1 = self.find(node1)
-        root2 = self.find(node2)
-
-        if root1 != root2:
-            if self.size[root1] < self.size[root2]:
-                self.parents[root1] = root2
-                self.size[root2] += self.size[root1]
+        if parent1 != parent2:
+            # two cases 
+            if sizes[parent1] >= sizes[parent2]:
+                parents[parent2] = parent1
+                sizes[parent1] += sizes[parent2]
             else:
-                self.parents[root2] = root1
-                self.size[root1] += self.size[root2]
+                parents[parent1] = parent2
+                sizes[parent2] += sizes[parent1]
 
-    def KruskalMST(self):
-        # this will find the minimum spanning tree
 
-        # step1 sort edges 
-        edges = sorted(self.graph, key=lambda x: x[2]) # TODO: remember graph is sorted by key
-        e = 0
-        i = 0
-        total_cost = 0
+
+        return parents, sizes
+       
+
+    def KruskalMST(self, graph):
+        # create for mst 
+        parents = [i for i in range(len(graph))]
+        sizes = [1 for _ in range(len(graph))]
+        # need to create a list of edges sorted 
+
+        smallestEdges = []
+
+        for i, edges in enumerate(graph):
+            for edge in edges:
+                end, length = edge
+                heapq.heappush(smallestEdges, (length, i, end))
+
+        # now we got all of our edges sorted 
+        t_length = 0
         edges_used = []
 
-        while e < self.vertices -1:
-            # we add each smallest edge to the graph
-            # get the first node 
-            node1, node2, length = edges[i]
+        while smallestEdges:
+            length, startNode, endNode = heapq.heappop(smallestEdges)
 
-            parent1 = self.find(node1)
-            parent2 = self.find(node2)
+            # check to see if the two nodes have the same parent 
+            start_node_parent = self.find(startNode, parents)
+            end_node_parent = self.find(endNode, parents)
 
-            if parent1 != parent2:
-                self.union(node1, node2)
-                total_cost += length
-                edges_used.append(edges[i])
-                e+=1
-            i+=1
+            if start_node_parent == end_node_parent:
+                # not use this edge
+                continue
+            else:
+                parents, sizes = self.union(startNode, endNode, parents, sizes)
+                t_length+= length
+                edges_used.append((startNode,endNode))
+
         
-        return edges_used, total_cost
+
+        return t_length, edges_used
 
 
 
 if __name__ == '__main__':
-    g = Graph(4) 
-    g.addEdge(0, 1, 10) 
-    g.addEdge(0, 2, 6) 
-    g.addEdge(0, 3, 5) 
-    g.addEdge(1, 3, 15) 
-    g.addEdge(2, 3, 4) 
+    graph = Graph()
+    g = [[(1,10),(2,6), (3,5)], [(3,15)], [(3,4)], []]
   
     # Function call 
-    print(g.KruskalMST())
+    print(graph.KruskalMST(g))
+
+    # should return 19 as the lenght with edges 
+    # (0,1)
+    # ((0,3)
+    # (2,3)
     pass
