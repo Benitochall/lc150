@@ -8,7 +8,6 @@ class Solution(object):
         ans = 0
         n = len(s)
         unique_values = list(set(list(s)))
-        print(unique_values)
         for i in unique_values:
             l = 0
             h = 0
