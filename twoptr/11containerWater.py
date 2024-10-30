@@ -1,18 +1,26 @@
 def subset_endpoints(array):
     n = len(array)
     endpoints = []
+    l= 0
+    r= len(array) -1
+    max_area = 0
 
     # Add endpoints for the full array
-    endpoints.append((array[0], array[-1]))
+    while l < r:
+        area = (r-l) * min(array[l], array[r])
+        max_area = max(area,max_area)
 
-    # Iterate over different subset sizes
-    for size in range(n - 1, 1, -1):  # Start from n-1 down to 1
-        for i in range(n - size + 1):
-            endpoints.append((array[i], array[i + size - 1]))
+        if array[l] < array[r]:
+            l+=1
+        else:
+            r-=1
 
-    return endpoints
+    return max_area
+
+
+   
 
 # Example usage:
-array = [1, 4, 2, 6, 7]
+array = [1,7,2,5,4,7,3,6]
 endpoints = subset_endpoints(array)
 print(endpoints)
