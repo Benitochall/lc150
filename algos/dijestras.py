@@ -12,7 +12,7 @@ class Graph():
         info_set[node] = (0, [])
         heapq.heapify(dist_pq)
 
-        while len(visited) < self.size:
+        while dist_pq:
             dist, exploring_node = heapq.heappop(dist_pq)
             path = info_set[exploring_node][1]
 
