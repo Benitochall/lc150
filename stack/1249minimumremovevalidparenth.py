@@ -6,7 +6,6 @@ class Solution(object):
         """
         stack = []
         outside = []
-        count = 0
         for i, letter in enumerate(s):
             if letter == '(':
                 stack.append(i)
